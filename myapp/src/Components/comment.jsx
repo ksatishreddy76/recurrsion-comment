@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-const Comment = ({commentsData, handleAddComment, handleUpdateComment}) => {
+const Comment = ({ commentsData, handleAddComment, handleUpdateComment, handleDeleteComment }) => {
   const [edit, setEdit] = useState(false);
   const [editId, setEditId] = useState(null);
   const [newValue, setNewValue] = useState("");
@@ -19,7 +19,7 @@ const Comment = ({commentsData, handleAddComment, handleUpdateComment}) => {
   };
 
   return commentsData.items.map((item) => (
-    <div style={{marginLeft: "10px"}}>
+    <div style={{ marginLeft: "10px" }}>
       <div className="comment">
         {edit && editId === item.id ? (
           <input value={newValue} onChange={(e) => setNewValue(e.target.value)} />
@@ -27,7 +27,7 @@ const Comment = ({commentsData, handleAddComment, handleUpdateComment}) => {
           <p>{item.title}</p>
         )}
         {edit && editId === item.id ? (
-          <div style={{display: "flex", gap: "10px"}}>
+          <div style={{ display: "flex", gap: "10px" }}>
             <button
               onClick={() => {
                 handleUpdateComment(newValue, item.id);
@@ -39,7 +39,7 @@ const Comment = ({commentsData, handleAddComment, handleUpdateComment}) => {
             <button onClick={cancelClick}>Cancel</button>
           </div>
         ) : (
-          <div style={{display: "flex", gap: "10px"}}>
+          <div style={{ display: "flex", gap: "10px" }}>
             <button
               onClick={() => {
                 setAddReply(true);
@@ -57,7 +57,7 @@ const Comment = ({commentsData, handleAddComment, handleUpdateComment}) => {
             >
               Edit
             </button>
-            <button>Delete</button>
+            <button onClick={() => handleDeleteComment(item.id)}>Delete</button>
           </div>
         )}
 
@@ -88,6 +88,7 @@ const Comment = ({commentsData, handleAddComment, handleUpdateComment}) => {
         commentsData={item}
         handleAddComment={handleAddComment}
         handleUpdateComment={handleUpdateComment}
+        handleDeleteComment={handleDeleteComment}
       />
     </div>
   ));

@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Comment from "./Components/comment";
 import CustomHook from "./Hooks/customHook";
 
 function App() {
-  const {insertComment, updateComment} = CustomHook();
+  const { insertComment, updateComment, deleteComment } = CustomHook();
 
   const [comment, setComment] = useState("");
 
@@ -27,6 +27,11 @@ function App() {
     setCommentsData(finalStructure);
   };
 
+  const handleDeleteComment = (id) => {
+    const finalStructure = deleteComment(commentsData, id);
+    setCommentsData(finalStructure);
+  };
+
   return (
     <div className="App">
       <h1>Comment Recurrsion Method</h1>
@@ -43,6 +48,7 @@ function App() {
         commentsData={commentsData}
         handleAddComment={handleAddComment}
         handleUpdateComment={handleUpdateComment}
+        handleDeleteComment={handleDeleteComment}
       />
     </div>
   );
