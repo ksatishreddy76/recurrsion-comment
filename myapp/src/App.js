@@ -4,45 +4,26 @@ import Comment from "./Components/comment";
 import CustomHook from "./Hooks/customHook";
 
 function App() {
-  const {insertComment} = CustomHook();
+  const {insertComment, updateComment} = CustomHook();
 
   const [comment, setComment] = useState("");
 
   const initialData = {
     id: 1,
-    items: [
-      {
-        id: 11,
-        title: "Home",
-        items: [],
-      },
-      {
-        id: 12,
-        title: "Home",
-        items: [
-          {
-            id: 111,
-            title: "Home",
-            items: [
-              {
-                id: 1111,
-                title: "Home",
-                items: [],
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    items: [],
   };
 
   const [commentsData, setCommentsData] = useState(initialData);
 
   const id = commentsData.id;
 
-  const handleAddComment = (commentsData, comment, id) => {
+  const handleAddComment = (comment, id) => {
     const finalStructure = insertComment(commentsData, comment, id);
-    console.log("finalStructure", finalStructure);
+    setCommentsData(finalStructure);
+  };
+
+  const handleUpdateComment = (comment, id) => {
+    const finalStructure = updateComment(commentsData, comment, id);
     setCommentsData(finalStructure);
   };
 
@@ -57,8 +38,12 @@ function App() {
         }}
       />
       <br />
-      <button onClick={() => handleAddComment(commentsData, comment, id)}>Comment</button>
-      <Comment commentsData={commentsData} />
+      <button onClick={() => handleAddComment(comment, id)}>Comment</button>
+      <Comment
+        commentsData={commentsData}
+        handleAddComment={handleAddComment}
+        handleUpdateComment={handleUpdateComment}
+      />
     </div>
   );
 }
